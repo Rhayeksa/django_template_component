@@ -1,4 +1,6 @@
-Django==5.0.1
-djangorestframework==3.14.0
+Django==5.0.1 # Framewok Python dalam pembuatan Web dan API
+djangorestframework==3.14.0 # Library untuk development API
 markdown==3.5.2 # Markdown support for the browsable API.
 django-filter==23.5 # Filtering support
+autopep8==2.0.4 # Drive untuk merapikan format kode(coding)
+Pillow==10.2.0 # Drive untuk management Images
