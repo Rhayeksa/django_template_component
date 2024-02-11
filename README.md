@@ -20,7 +20,26 @@ cd ./my_first_django_project # masuk directory folder
 python3.11 -m venv .venv && # membuat virtual env
 . ./.venv/bin/active && # masuk ke mode virtual env
 pip install --upgrade pip && # upgrade version package manager pada virtual env
-pip install -r ./requirements.txt # masuk ke mode virtual env
+```
+
+membuat file requirements.txt
+
+```console
+printf \
+"\
+Django==5.0.1 # Framewok Python dalam pembuatan Web dan API\
+\ndjangorestframework==3.14.0 # Library untuk development API\
+\nmarkdown==3.5.2 # Markdown support for the browsable API.\
+\ndjango-filter==23.5 # Filtering support\
+\nautopep8==2.0.4 # Drive untuk merapikan format kode(coding)\
+\nPillow==10.2.0 # Drive untuk management Images\
+\n\
+"\
+> requirements.txt
+```
+
+```console
+pip install -r ./requirements.txt # install driver dan library pada virtual env
 ```
 
 ```console
