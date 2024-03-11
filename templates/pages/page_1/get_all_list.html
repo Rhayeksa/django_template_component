@@ -1,0 +1,185 @@
+<!- -  - ->{%extends "base.html"%}<!- -  - ->
+
+<!- -  - ->{%block apps%}<!- -  - ->
+<!- -  - ->{% include "components/navbar.html"%}<!- -  - ->
+<div class="container-fluid">
+  <div class="row row-cols-auto mb-3">
+    <div class="col mb-3">
+      <a
+        href="{% url 'web:insert_one' %}"
+        class="btn btn-secondary btn-sm"
+        title="Insert One"
+      >
+        <!- -  - ->{% include "components/icon_insert.html" %}<!- -  - ->
+        One
+      </a>
+      <a href="#" class="btn btn-secondary btn-sm" title="Insert Many">
+        <!- -  - ->{% include "components/icon_insert.html" %}<!- -  - ->
+        Many
+      </a>
+      <a href="#" class="btn btn-secondary btn-sm" title="Delete Many">
+        <!- -  - ->{% include "components/icon_delete.html" %}<!- -  - ->
+        Many
+      </a>
+      <a href="#" class="btn btn-secondary btn-sm" title="Update Many">
+        <!- -  - ->{% include "components/icon_update.html" %}<!- -  - ->
+        Many
+      </a>
+    </div>
+
+    <!-- pagination -->
+    <div class="col ms-auto">
+      <!- -  - ->{% if data.has_other_pages %}<!- -  - ->
+      <ul class="pagination pagination-sm">
+        <!- -  - ->{% if data.has_previous %}<!- -  - ->
+        <li class="page-item">
+          <a class="page-link" href="?page={{ data.previous_page_number }}"
+            >Previous</a
+          >
+        </li>
+        <!- -  - ->{% else %}<!- -  - ->
+        <li class="disabled page-item">
+          <a class="page-link" href="#">Previous</a>
+        </li>
+        <!- -  - ->{% endif %}<!- -  - ->
+
+        <!- -  - ->{% for i in data.paginator.page_range %}<!- -  - ->
+        <!- -  - ->{% if data.number == i %}<!- -  - ->
+        <li class="active page-item">
+          <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+        </li>
+        <!- -  - ->{% else %}<!- -  - ->
+        <li class="page-item">
+          <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+        </li>
+        <!- -  - ->{% endif %}<!- -  - ->
+        <!- -  - ->{% endfor %}<!- -  - ->
+
+        <!- -  - ->{% if data.has_next %}<!- -  - ->
+        <li class="page-item">
+          <a class="page-link" href="?page={{ data.next_page_number }}">Next</a>
+        </li>
+        <!- -  - ->{% else %}<!- -  - ->
+        <li class="disabled page-item">
+          <a class="page-link" href="#">Next</a>
+        </li>
+        <!- -  - ->{% endif %}<!- -  - ->
+      </ul>
+      <!- -  - ->{% endif %}<!- -  - ->
+    </div>
+
+    <!-- search -->
+    <div class="col ms-auto">
+      <form class="d-flex">
+        <select id="disabledSelect" class="form-select">
+          <option>Char Field</option>
+          <option>Number Field</option>
+          <option>Email Field</option>
+          <option>Choice Field</option>
+          <option>Text Field</option>
+        </select>
+        <input
+          type="text"
+          class="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+        <button type="submit" class="btn btn-secondary btn-sm">
+          <!- -  - ->{% include "components/icon_search.html" %}<!- -  - ->
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- data table -->
+  <div class="table-responsive-xxl">
+    <table class="table table-hover">
+      <thead class="table-light">
+        <tr>
+          <!-- <th scope="col" class="text-center">#</th> -->
+          <th scope="col" style="min-width: 250px">Char Field</th>
+          <th scope="col" style="min-width: 250px">Number Field</th>
+          <th scope="col" style="min-width: 250px">Email Field</th>
+          <th scope="col" style="min-width: 250px">Choice Field</th>
+          <th scope="col" style="min-width: 150px">Text Field</th>
+          <th scope="col" class="text-center" colspan="3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!- -  - ->{% for i in data %}<!- -  - ->
+        <tr>
+          <!-- <th scope="row" class="text-center">{{forloop.counter}}</th> -->
+          <td>{{i.char_field}}</td>
+          <td>{{i.number_field}}</td>
+          <td>{{i.email_field}}</td>
+          <td>{{i.choice_field}}</td>
+          <td>{{i.text_field}}</td>
+          <td class="text-center" style="width: 0px">
+            <a href="#" class="btn btn-sm btn-secondary" title="Update">
+              <!- -  - ->{% include "components/icon_update.html" %}<!- -  - ->
+            </a>
+          </td>
+          <td class="text-center" style="width: 0px">
+            <button
+              type="button"
+              class="btn btn-sm btn-secondary"
+              data-bs-toggle="modal"
+              data-bs-target="#modalDeleteData"
+              title="Delete"
+            >
+              <!- -  - ->{% include "components/icon_delete.html" %}<!- -  - ->
+            </button>
+            <!-- Modal Delete -->
+            <div
+              class="modal fade"
+              id="modalDeleteData"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header bg-secondary">
+                    <h1
+                      class="modal-title fs-5 text-white"
+                      id="exampleModalLabel"
+                    >
+                      Peringatan
+                    </h1>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    Apakah Kamu yakin akan menghapus data tersebut...?
+                  </div>
+                  <div class="modal-footer">
+                    <a href="#" class="btn btn-secondary">Iya</a>
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Tidak
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td class="text-center" style="width: 0px">
+            <a href="#" class="btn btn-sm btn-secondary" title="View">
+              <!- -  - ->{% include "components/icon_view.html" %}<!- -  - ->
+            </a>
+          </td>
+        </tr>
+        <!- -  - ->{% endfor %}<!- -  - ->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!- -  - ->{%endblock apps%}<!- -  - ->

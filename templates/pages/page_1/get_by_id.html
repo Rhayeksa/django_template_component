@@ -1,0 +1,139 @@
+<!- -  - ->{%extends "base.html"%}<!- -  - ->
+
+<!- -  - ->{%block apps%}<!- -  - ->
+<!- -  - ->{%include "components/navbar.html"%}<!- -  - ->
+<div class="container-fluid">
+  <div class="card border">
+    <div class="card-header text-bg-light">
+      <div class="h3 text-center">Get By ID</div>
+    </div>
+    <div class="card-body">
+      <fieldset disabled>
+        <div class="row mb-3">
+          <div class="col">
+            <div class="mb-2">
+              <!- -  - ->{{data.form.char_field.label}}<!- -  - ->
+            </div>
+            <input class="form-control" value="{{data.model.char_field}}" />
+          </div>
+          <div class="col">
+            <div class="mb-2">
+              <!- -  - ->{{data.form.email_field.label}}<!- -  - ->
+            </div>
+            <input class="form-control" value="{{data.model.email_field}}" />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <div class="mb-2">
+              <!- -  - ->{{data.form.number_field.label}}<!- -  - ->
+            </div>
+            <input class="form-control" value="{{data.model.number_field}}" />
+          </div>
+          <div class="col">
+            <div class="mb-2">
+              <!- -  - ->{{data.form.choice_field.label}}<!- -  - ->
+            </div>
+            <input class="form-control" value="{{data.model.choice_field}}" />
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <div class="mb-2">
+              <!- -  - ->{{data.form.image_field.label}}<!- -  - ->
+            </div>
+            <img src="{{data.model.image.url}}" alt="" width="150px" />
+          </div>
+          <div class="col">
+            <div class="mb-2">
+              <!- -  - ->{{data.form.text_field.label}}<!- -  - ->
+            </div>
+            <textarea class="form-control" rows="5">
+{{data.model.text_field}}
+            </textarea>
+          </div>
+          <div class="col">
+            <div class="mb-2">
+              <!- -  - ->{{data.form.date_time_field.label}}<!- -  - ->
+            </div>
+            <input
+              class="form-control"
+              type="datetime-local"
+              disabled
+              value="{{data.model.date_time_field|date:'Y-m-d'}}T{{data.model.date_time_field|time:'h:i'}}"
+            />
+          </div>
+          <div class="col">
+            <div class="mb-2">
+              <!- -  - ->{{data.form.date_field.label}}<!- -  - ->
+            </div>
+            <input
+              class="form-control"
+              type="date"
+              disabled
+              value="{{data.model.date_time_field|date:'Y-m-d'}}"
+            />
+          </div>
+        </div>
+      </fieldset>
+      <a
+        href="{% url 'web:update_one_by_id' data.model.id_field %}"
+        class="btn btn-outline-secondary me-3"
+        title="Update"
+      >
+        <!- -  - ->{% include "components/icon_update.html" %}<!- -  - ->
+        Update
+      </a>
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        data-bs-toggle="modal"
+        data-bs-target="#modalDeleteData"
+        title="Delete"
+      >
+        <!- -  - ->{% include "components/icon_delete.html" %}<!- -  - ->
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Delete -->
+<div
+  class="modal fade"
+  id="modalDeleteData"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-secondary">
+        <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">
+          Peringatan
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Apakah Kamu yakin akan menghapus data tersebut...?
+      </div>
+      <div class="modal-footer">
+        <a
+          href="{% url 'web:delete_one_by_id' data.model.id_field %}"
+          class="btn btn-secondary"
+          >Iya</a
+        >
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Tidak
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!- -  - ->{%endblock apps%}<!- -  - ->

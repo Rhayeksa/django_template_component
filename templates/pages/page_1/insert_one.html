@@ -1,0 +1,89 @@
+<!- -  - ->{%extends "base.html"%}<!- -  - ->
+
+<!- -  - ->{%block apps%}<!- -  - ->
+<!- -  - ->{%include "components/navbar.html"%}<!- -  - ->
+<div class="container-fluid">
+  <form method="post">
+    <!- -  - ->{% csrf_token %}<!- -  - ->
+    <div class="card border">
+      <div class="card-header text-bg-light">
+        <div class="h3 text-center">Insert One</div>
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col">
+            <div class="mb-2">
+              {{data.char_field.label}}<span class="text-danger"> *</span>
+            </div>
+            {{data.char_field}}
+            <div class="text-danger">{{data.char_field.errors}}</div>
+          </div>
+          <div class="col">
+            <div class="mb-2">
+              {{data.email_field.label}}<span class="text-danger"> *</span>
+            </div>
+            {{data.email_field}}
+            <div class="text-danger">{{data.email_field.errors}}</div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <div class="mb-2">
+              {{data.number_field.label}}<span class="text-danger"> *</span>
+            </div>
+            {{data.number_field}}
+            <div class="text-danger">{{data.number_field.errors}}</div>
+          </div>
+          <div class="col">
+            <div class="mb-2">
+              {{data.choice_field.label}}<span class="text-danger"> *</span>
+            </div>
+            {{data.choice_field}}
+            <div class="text-danger">{{data.choice_field.errors}}</div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <div class="mb-2">{{data.image_field.label}}</div>
+            {{data.image_field}}
+            <div class="text-danger">{{data.image_field.errors}}</div>
+          </div>
+          <div class="col">
+            <div class="mb-2">
+              {{data.text_field.label}}<span class="text-danger"> *</span>
+            </div>
+            {{data.text_field}}
+            <div class="text-danger">{{data.text_field.errors}}</div>
+          </div>
+          <div class="col">
+            <div class="mb-2">
+              {{data.date_time_field.label}}<span class="text-danger"> *</span>
+            </div>
+            {{data.date_time_field}}
+            <div class="text-danger">{{data.date_time_field.errors}}</div>
+          </div>
+          <div class="col">
+            <div class="mb-2">
+              {{data.date_field.label}}<span class="text-danger"> *</span>
+            </div>
+            {{data.date_field}}
+            <div class="text-danger">{{data.date_field.errors}}</div>
+          </div>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-outline-secondary me-3"
+          title="Save"
+        >
+          <!- -  - ->{% include "components/icon_save.html" %}<!- -  - ->
+          Save
+        </button>
+        <button type="reset" class="btn btn-outline-secondary" title="Reset">
+          <!- -  - ->{% include "components/icon_reset.html" %}<!- -  - ->
+          Reset
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<!- -  - ->{%endblock apps%}<!- -  - ->

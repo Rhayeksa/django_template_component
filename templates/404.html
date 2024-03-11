@@ -1,0 +1,47 @@
+<!--  -->{% extends "base.html" %}<!--  -->
+
+<!--  -->{% block apps %}<!--  -->
+<!--  -->{% include "components/navbar.html"%}<!--  -->
+<div class="container-fluid">
+  <div class="row row-cols-auto">
+    <div class="col mb-3">
+      <div class="card border me-1" style="min-width: 20rem">
+        <div class="card-header text-center h3">REST API</div>
+        <div class="card-body text-light">
+          <a
+            href="{% url 'api:home' %}"
+            class="btn btn-secondary card-title d-grid"
+            >Open</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="col mb-3">
+      <div class="card border me-1" style="min-width: 20rem">
+        <div class="card-header text-center h3">WEB APP</div>
+        <div class="card-body text-light">
+          <a
+            href="{% url 'web:get_all' %}"
+            class="btn btn-secondary card-title d-grid"
+            >Open</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="col mb-3">
+      <div class="card border me-1" style="min-width: 20rem">
+        <div class="card-header text-center h3">WEB APP RAW QUERY</div>
+        <div class="card-body text-light">
+          <a
+            href="{% url 'web:get_all_raw_query' %}"
+            class="btn btn-secondary card-title d-grid"
+            >Open</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  -->{% endblock apps %}<!--  -->
