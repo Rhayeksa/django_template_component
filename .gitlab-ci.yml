@@ -68,21 +68,23 @@ build-image-job:       # This job runs in the build stage, which runs first.
     - if: $CI_COMMIT_BRANCH == 'main'
   services:
     - docker:24.0.5-dind
-  before_script:
-    - docker info
+  # before_script:
+  #   - docker info
   script:
     - docker build -t rhayeksa/dtc:latest .
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
     - docker push rhayeksa/dtc:latest
 
 deploy-to-openshift-job:      # This job runs in the deploy stage.
-  image: openebs/openshift-ci:latest
+  # image: openebs/openshift-ci:latest
   stage: deploy-to-openshift  # It only runs when *both* jobs in the test stage complete successfully.
   rules:
     - if: $CI_COMMIT_BRANCH == 'main'
   script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
+    # - echo "Deploying application..."
+    # - echo "Application successfully deployed."
+    - ls -a
+    - cp ./utils/oc /bin
     - oc login --token=$OC_TOKEN --server=$OC_SERVER
 
 # publish-to-image-register-job:
