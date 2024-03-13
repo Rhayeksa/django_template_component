@@ -1,4 +1,4 @@
-# Django Template Components
+# Django Template Component
 
 Project yang akan digunakan sebagai template ketika pembuatan project web app dan rest api menggunakan Django framework
 
@@ -291,3 +291,10 @@ rhayeksa/dockerhubx:dtc
 username/image_name:tag
 
 ## create project/repo di gitlab
+
+## Docker
+
+### membuat project menjadi image
+```
+
+```
