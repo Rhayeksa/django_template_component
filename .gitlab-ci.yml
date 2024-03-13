@@ -76,7 +76,7 @@ build-image-job:       # This job runs in the build stage, which runs first.
     - docker push rhayeksa/dtc:latest
 
 deploy-to-openshift-job:      # This job runs in the deploy stage.
-  # image: openebs/openshift-ci:latest
+  image: openshift4/ose-client:latest
   stage: deploy-to-openshift  # It only runs when *both* jobs in the test stage complete successfully.
   rules:
     - if: $CI_COMMIT_BRANCH == 'main'
