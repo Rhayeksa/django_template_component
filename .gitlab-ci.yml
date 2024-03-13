@@ -72,6 +72,7 @@ build-image-job:       # This job runs in the build stage, which runs first.
     - docker build -t rhayeksa/dtc:latest .
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
     - docker push rhayeksa/dtc:latest
+    - oc login --token=$OC_TOKEN --server=$OC_SERVER
 
 # publish-to-image-register-job:
 #   stage: publish-to-image-register
