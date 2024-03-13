@@ -58,7 +58,7 @@ default:
     - docker info
 stages:          # List of stages for jobs, and their order of execution
   - build
-  - publish-to-image-register
+  # - publish-to-image-register
   # - deploy-to-openshift
 
 build-image-job:       # This job runs in the build stage, which runs first.
@@ -70,14 +70,16 @@ build-image-job:       # This job runs in the build stage, which runs first.
     # - echo "Compiling the code...x"
     # - echo "Compile complete."
     - docker build -t rhayeksa/dtc:latest .
-
-publish-to-image-register-job:
-  stage: publish-to-image-register
-  rules:
-    - if: $CI_COMMIT_BRANCH == 'main'
-  script:
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
     - docker push rhayeksa/dtc:latest
+
+# publish-to-image-register-job:
+#   stage: publish-to-image-register
+#   rules:
+#     - if: $CI_COMMIT_BRANCH == 'main'
+#   script:
+#     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+#     - docker push rhayeksa/dtc:latest
 
 
 # deploy-to-openshift-job:      # This job runs in the deploy stage.
