@@ -50,16 +50,16 @@
 #     - echo "Application successfully deployed."
 
 # here
-default:
-  image: docker:24.0.5
-  services:
-    - docker:24.0.5-dind
-  before_script:
-    - docker info
+# default:
+#   image: docker:24.0.5
+#   services:
+#     - docker:24.0.5-dind
+#   before_script:
+#     - docker info
 stages:          # List of stages for jobs, and their order of execution
   - build
   # - publish-to-image-register
-  # - deploy-to-openshift
+  - deploy-to-openshift
 
 build-image-job:       # This job runs in the build stage, which runs first.
   image: docker:24.0.5
