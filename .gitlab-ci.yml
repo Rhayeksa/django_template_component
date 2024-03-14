@@ -57,27 +57,27 @@
 #   before_script:
 #     - docker info
 stages:          # List of stages for jobs, and their order of execution
-  # - build
+  - build
   # - publish-to-image-register
-  - deploy-to-openshift
+  - deploy
 
-# build-image-job:       # This job runs in the build stage, which runs first.
-#   image: docker:24.0.5
-#   stage: build
-#   rules:
-#     - if: $CI_COMMIT_BRANCH == 'main'
-#   services:
-#     - docker:24.0.5-dind
-#   # before_script:
-#   #   - docker info
-#   script:
-#     - docker build -t rhayeksa/dtc:latest .
-#     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-#     - docker push rhayeksa/dtc:latest
+build-image-and-register-to-dockerhub-job:       # This job runs in the build stage, which runs first.
+  image: docker:24.0.5
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
+  services:
+    - docker:24.0.5-dind
+  # before_script:
+  #   - docker info
+  script:
+    - docker build -t rhayeksa/dtc:latest .
+    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    - docker push rhayeksa/dtc:latest
 
 deploy-to-openshift-job:      # This job runs in the deploy stage.
-  image: appuio/oc:latest
-  stage: deploy-to-openshift  # It only runs when *both* jobs in the test stage complete successfully.
+  image: appuio/oc:v4.13
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   rules:
     - if: $CI_COMMIT_BRANCH == 'main'
   script:
@@ -86,6 +86,7 @@ deploy-to-openshift-job:      # This job runs in the deploy stage.
     # - ls -a
     # - cp ./utils/oc /bin
     - oc login --token=$OC_TOKEN --server=$OC_SERVER
+    - oc new-app --image rhayeksa/dtc:latest
 
 # publish-to-image-register-job:
 #   stage: publish-to-image-register
