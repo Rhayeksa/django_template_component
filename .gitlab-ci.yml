@@ -86,7 +86,8 @@ deploy-to-openshift-job:      # This job runs in the deploy stage.
     # - ls -a
     # - cp ./utils/oc /bin
     - oc login --token=$OC_TOKEN --server=$OC_SERVER
-    - oc new-app --image rhayeksa/dtc:latest
+    # - oc new-app --image rhayeksa/dtc:latest
+    - oc rollout latest dc/dtc
 
 # publish-to-image-register-job:
 #   stage: publish-to-image-register
