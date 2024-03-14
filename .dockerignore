@@ -1,0 +1,9 @@
+.venv
+.vscode
+# db.*
+*.sql
+.git*
+docker*
+.docker*
+LICENSE
+*.md
