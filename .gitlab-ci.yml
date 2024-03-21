@@ -56,47 +56,39 @@
 #     - docker:24.0.5-dind
 #   before_script:
 #     - docker info
+variables:
+  DOCKER_IMAGE: "rhayeksa/dtc:latest"
+  OPENSHIFT_APP: "dtc:latest"
 stages:          # List of stages for jobs, and their order of execution
   - build
-  # - publish-to-image-register
   - deploy
-
-build-image-and-register-to-dockerhub-job:       # This job runs in the build stage, which runs first.
+build-image-and-register-to-dockerhub-job:
+  tags:
+    - hunter-tags
   image: docker:24.0.5
   stage: build
   rules:
     - if: $CI_COMMIT_BRANCH == 'main'
   services:
     - docker:24.0.5-dind
-  # before_script:
-  #   - docker info
-  script:
-    - docker build -t rhayeksa/dtc:latest .
+  before_script:
+    # - docker info
     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-    - docker push rhayeksa/dtc:latest
+  script:
+    - docker build -t $DOCKER_IMAGE .
+    - docker push $DOCKER_IMAGE
 
-deploy-to-openshift-job:      # This job runs in the deploy stage.
+deploy-to-openshift-job:
   image: appuio/oc:v4.13
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  stage: deploy
   rules:
     - if: $CI_COMMIT_BRANCH == 'main'
-  script:
-    # - echo "Deploying application..."
-    # - echo "Application successfully deployed."
-    # - ls -a
-    # - cp ./utils/oc /bin
+  before_script:
     - oc login --token=$OC_TOKEN --server=$OC_SERVER
-    # - oc new-app --image rhayeksa/dtc:latest
-    # - oc rollout latest dc/dtc
-    - oc import-image dtc:latest --from=rhayeksa/dtc:latest --confirm
-
-# publish-to-image-register-job:
-#   stage: publish-to-image-register
-#   rules:
-#     - if: $CI_COMMIT_BRANCH == 'main'
-#   script:
-#     - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
-#     - docker push rhayeksa/dtc:latest
+  script:
+    - oc import-image $OPENSHIFT_APP --from=$DOCKER_IMAGE --confirm
+    - oc autoscale dc/dtc --min 3 --max 10 --cpu-percent=80
+    - oc scale --replicas=3 dc/dtc
 
 
 
